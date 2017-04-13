@@ -20,12 +20,19 @@ class ArticlesController extends Controller
   {
     $article = new Article;
     $article->title = $request->input('title');
+    $article->subheader = $request->input('subheader');
+    $article->firstCharacter = $request->input('firstCharacter');
     $article->body = $request->input('body');
-
     $image = $request->file('image');
     $imageName = $image->getClientOriginalName();
     $image->move("storage/", $imageName);
     $article->image = $request->root()."/storage/".$imageName;
+
+
+    $image2 = $request->file('image2');
+    $imageName2 = $image2->getClientOriginalName();
+    $image2->move("storage/", $imageName2);
+    $article->image2 = $request->root()."/storage/".$imageName2;
 
     $article->save();
 

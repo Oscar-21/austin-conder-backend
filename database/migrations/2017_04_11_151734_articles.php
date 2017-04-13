@@ -18,7 +18,9 @@ class Articles extends Migration
             $table->string('title');
             $table->longText('body');
             $table->longText('image');
-            $table->rememberToken();
+            $table->string('subheader');
+            $table->longText('image2');
+            $table->string('firstCharacter');
             $table->timestamps();
         });
     }
