@@ -11,7 +11,9 @@ class ArticlesController extends Controller
   // List of articles
   public function index()
   {
-    $articles = Article::all();
+    /*$articles = Article::all();*/
+    $articles = Article::take(4)->get();
+    /*$articles = Article::orderBy("id","desc")->take(4)->get();*/
     return Response::json($articles);
   }
 
@@ -22,7 +24,9 @@ class ArticlesController extends Controller
     $article->title = $request->input('title');
     $article->subheader = $request->input('subheader');
     $article->firstCharacter = $request->input('firstCharacter');
+
     $article->body = $request->input('body');
+
     $image = $request->file('image');
     $imageName = $image->getClientOriginalName();
     $image->move("storage/", $imageName);
