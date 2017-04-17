@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Article;
 use Response;
-
+use Illuminate\Support\Facades\Validator;
 class ArticlesController extends Controller
 {
   // List of articles
@@ -20,6 +20,21 @@ class ArticlesController extends Controller
   //store our Article
   public function store(Request $request)
   {
+
+    $validator = Validator::make(Purifier::clean($request->all()), [
+      'title' => 'required',
+      'subheader' => 'required',
+      'firstCharacter' => 'required',
+      'body' => 'required',
+      'image' => 'required',
+      'image2' => 'required',
+    ]);
+
+      if ($validator->fails()) {
+        return Response::json(["error" => "You must fill out all fields."]);
+      }
+
+
     $article = new Article;
     $article->title = $request->input('title');
     $article->subheader = $request->input('subheader');
