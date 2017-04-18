@@ -43,7 +43,7 @@ return [
 
         'beanstalkd' => [
             'driver' => 'beanstalkd',
-            'host' => 'jasparlamar.crab',
+            'host' => 'localhost',
             'queue' => 'default',
             'retry_after' => 90,
         ],

@@ -73,7 +73,7 @@ class ArticlesController extends Controller
   }
 
   // show single article
-    public function show($id)
+  public function show($id)
   {
     $article = Article::find($id);
     return Response::json($article);
