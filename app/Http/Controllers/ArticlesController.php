@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Article;
 use Response;
 use Illuminate\Support\Facades\Validator;
+use Purifier;
 class ArticlesController extends Controller
 {
   // List of articles
@@ -24,7 +25,6 @@ class ArticlesController extends Controller
     $validator = Validator::make(Purifier::clean($request->all()), [
       'title' => 'required',
       'subheader' => 'required',
-      'firstCharacter' => 'required',
       'body' => 'required',
       'image' => 'required',
       'image2' => 'required',
@@ -38,15 +38,14 @@ class ArticlesController extends Controller
     $article = new Article;
     $article->title = $request->input('title');
     $article->subheader = $request->input('subheader');
-    $article->firstCharacter = $request->input('firstCharacter');
 
-    $article->body = $request->input('body');
+    $article->body = substr($request->input('body'),1);
+    $article->firstCharacter = substr($request->input('body'),0,1);
 
     $image = $request->file('image');
     $imageName = $image->getClientOriginalName();
     $image->move("storage/", $imageName);
     $article->image = $request->root()."/storage/".$imageName;
-
 
     $image2 = $request->file('image2');
     $imageName2 = $image2->getClientOriginalName();

@@ -16,6 +16,8 @@ class Abouts extends Migration
       Schema::create('abouts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('header');
+            $table->string('header2');
+            $table->string('header3');
             $table->longText('body');
             $table->longText('body2');
             $table->longText('body3');
@@ -33,6 +35,6 @@ class Abouts extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('articles');
+        Schema::dropIfExists('abouts');
     }
 }

@@ -19,8 +19,8 @@ class Articles extends Migration
         $table->longText('body');
         $table->longText('image');
         $table->string('subheader');
-        $table->longText('image2');
         $table->string('firstCharacter');
+        $table->longText('image2');
         $table->timestamps();
       });
     }
