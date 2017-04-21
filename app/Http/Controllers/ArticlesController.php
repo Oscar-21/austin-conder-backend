@@ -1,17 +1,18 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Article;
 use Response;
 use Illuminate\Support\Facades\Validator;
 use Purifier;
-class ArticlesController extends Controller
-{
+use JWTAuth;
+class ArticlesController extends Controller {
+
+  public function __construct() {
+    $this->middleware("jwt.auth", ["only"=>["store","update","destroy"]]);
+  }
   // List of articles
-  public function index()
-  {
+  public function index() {
     /*$articles = Article::all();*/
     $articles = Article::take(4)->get();
     /*$articles = Article::orderBy("id","desc")->take(4)->get();*/
@@ -19,9 +20,7 @@ class ArticlesController extends Controller
   }
 
   //store our Article
-  public function store(Request $request)
-  {
-
+  public function store(Request $request) {
     $validator = Validator::make(Purifier::clean($request->all()), [
       'title' => 'required',
       'subheader' => 'required',
@@ -30,10 +29,9 @@ class ArticlesController extends Controller
       'image2' => 'required',
     ]);
 
-      if ($validator->fails()) {
-        return Response::json(["error" => "You must fill out all fields."]);
-      }
-
+    if ($validator->fails()) {
+      return Response::json(["error" => "You must fill out all fields."]);
+    }
 
     $article = new Article;
     $article->title = $request->input('title');
@@ -56,10 +54,8 @@ class ArticlesController extends Controller
 
     return Response::json(["success" => "You did it"]);
   }
-
   // update our article
-  public function update($id, Request $request)
-  {
+  public function update($id, Request $request) {
     $article = Article::find($id);
     $article->title = $request->input('title');
     $article->body = $request->input('body');
@@ -70,21 +66,16 @@ class ArticlesController extends Controller
     $article->save();
     return Response::json(["success" => "Article Updated"]);
   }
-
   // show single article
-  public function show($id)
-  {
+  public function show($id) {
     $article = Article::find($id);
     return Response::json($article);
   }
-
     // delete a single article
-    public function destroy($id)
-  {
+    public function destroy($id) {
     $article = Article::find($id);
     $article->delete();
 
     return Response::json(['success' => 'Deleted Article.']);
   }
-
 }

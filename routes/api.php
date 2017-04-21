@@ -27,3 +27,6 @@ Route::post('deleteArticle/{id}', 'ArticlesController@destroy');
 Route::post('storeAbout', 'AboutsController@store');
 Route::get('getAbout', 'AboutsController@index');
 Route::post('updateAbout/{id}', 'AboutsController@update');
+
+Route::post('signUp', 'UsersController@signUp');
+Route::post('signIn', 'UsersController@signIn');
