@@ -12,7 +12,7 @@ class AboutsController extends Controller
 
   public function index()
   {
-    $abouts = About::find(3);
+    $abouts = About::find(1);
     /*$articles = Article::take(4)->get();*/
     /*$articles = Article::orderBy("id","desc")->take(4)->get();*/
     return Response::json($abouts);
